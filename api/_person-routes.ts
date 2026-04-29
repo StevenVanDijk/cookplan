@@ -1,36 +1,33 @@
 import { Router } from 'express';
 import type { Person } from '../src/app/core/models/person.model.js';
-
-const persons: Person[] = [];
+import { supabase } from './_supabase.js';
 
 export const personRouter = Router();
 
-personRouter.get('/', (_req, res) => {
-  res.json(persons);
+personRouter.get('/', async (_req, res) => {
+  const { data, error } = await supabase.from('persons').select('*');
+  if (error) { res.status(500).json({ error: error.message }); return; }
+  res.json(data);
 });
 
-personRouter.post('/', (req, res) => {
+personRouter.post('/', async (req, res) => {
   const body = req.body as Partial<Person>;
   if (!body.name || !body.color) {
     res.status(400).json({ error: 'name and color are required' });
     return;
   }
-  const person: Person = {
-    id: crypto.randomUUID(),
-    name: (body.name as string).trim(),
-    color: body.color as string,
-  };
-  persons.push(person);
-  res.status(201).json(person);
+  const { data, error } = await supabase
+    .from('persons')
+    .insert({ name: (body.name as string).trim(), color: body.color })
+    .select()
+    .single();
+  if (error) { res.status(500).json({ error: error.message }); return; }
+  res.status(201).json(data);
 });
 
-personRouter.delete('/:id', (req, res) => {
+personRouter.delete('/:id', async (req, res) => {
   const id = String(req.params['id']);
-  const idx = persons.findIndex((p) => p.id === id);
-  if (idx === -1) {
-    res.status(404).json({ error: 'Not found' });
-    return;
-  }
-  persons.splice(idx, 1);
+  const { error } = await supabase.from('persons').delete().eq('id', id);
+  if (error) { res.status(500).json({ error: error.message }); return; }
   res.status(204).send();
 });

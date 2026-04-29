@@ -50,3 +50,8 @@ Every change must be represented here as a user story before implementation begi
 **As a** user,
 **I want to** switch between the Schedule, People, and Meals views via a navigation bar,
 **So that** I can manage all aspects of the app from one place.
+
+### US-010 – Persist data across sessions and devices
+**As a** user,
+**I want to** have my assignments, people, and meals stored on a server,
+**So that** data survives browser clears and is shared across devices.
