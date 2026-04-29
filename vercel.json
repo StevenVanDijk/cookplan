@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/cookplan/browser",
+  "rewrites": [
+    { "source": "/api/assignments/(.*)", "destination": "/api/assignments" },
+    { "source": "/api/persons/(.*)", "destination": "/api/persons" },
+    { "source": "/api/meals/(.*)", "destination": "/api/meals" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

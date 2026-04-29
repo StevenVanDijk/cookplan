@@ -1,0 +1,65 @@
+.schedule {
+  padding: 16px;
+}
+
+.week-title {
+  margin: 0 0 16px;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 32px;
+
+  mat-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+    color: #bbb;
+    display: block;
+    margin: 0 auto 8px;
+  }
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.day-card {
+  &.today {
+    outline: 2px solid #4caf50;
+  }
+}
+
+.empty-day {
+  color: #aaa;
+  font-size: 0.875rem;
+  margin: 4px 0;
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 8px;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+@media (max-width: 480px) {
+  .days-grid {
+    grid-template-columns: 1fr;
+  }
+}

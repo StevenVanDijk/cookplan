@@ -1,0 +1,18 @@
+.assignment-card {
+  border-left: 4px solid #ccc;
+  transition: opacity 0.2s;
+
+  &.completed {
+    opacity: 0.55;
+
+    mat-card-title {
+      text-decoration: line-through;
+    }
+  }
+
+  .note {
+    font-size: 0.875rem;
+    color: #666;
+    margin: 0;
+  }
+}
