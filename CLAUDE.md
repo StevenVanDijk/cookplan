@@ -15,3 +15,7 @@ The codebase follows a four-step change management process:
 4. **Build verification**: "The production build must pass (`npm run build`) before a change is considered done."
 
 All four steps must be completed before any change is considered finalized. Incomplete work with failing tests or broken builds should not be committed or merged.
+
+# Supabase
+
+In case the database schema changes, make sure the migration is applied. 
