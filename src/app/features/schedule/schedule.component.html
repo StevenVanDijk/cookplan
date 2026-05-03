@@ -1,0 +1,83 @@
+<div class="schedule">
+  <h2 class="week-title">This Week's Schedule</h2>
+
+  @if (persons().length === 0) {
+    <mat-card class="empty-state">
+      <mat-card-content>
+        <mat-icon>people</mat-icon>
+        <p>Add some people in the <strong>People</strong> tab first.</p>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <div class="days-grid">
+      @for (day of weekDays(); track day.date) {
+        <mat-card class="day-card" [class.today]="day.isToday">
+          <mat-card-header>
+            <mat-card-title>{{ day.label }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            @for (a of assignmentsForDay(day.date); track a.id) {
+              <app-assignment-card
+                [assignment]="a"
+                [person]="personFor(a.personId)"
+                (toggleComplete)="onToggleComplete($event)"
+                (delete)="onDelete($event)"
+              />
+            } @empty {
+              <p class="empty-day">No one assigned</p>
+            }
+          </mat-card-content>
+          <mat-card-actions>
+            @if (selectedDay() !== day.date) {
+              <button mat-button color="primary" (click)="openAdd(day.date)">
+                <mat-icon>add</mat-icon> Assign
+              </button>
+            }
+          </mat-card-actions>
+
+          @if (selectedDay() === day.date) {
+            <mat-card-content class="add-form">
+              <mat-form-field appearance="outline">
+                <mat-label>Who cooks?</mat-label>
+                <mat-select [ngModel]="selectedPersonId()" (ngModelChange)="selectedPersonId.set($event)">
+                  @for (p of persons(); track p.id) {
+                    <mat-option [value]="p.id">{{ p.name }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Meal (optional)</mat-label>
+                <mat-select [ngModel]="selectedMealId()" (ngModelChange)="selectedMealId.set($event)">
+                  <mat-option value="">— type below —</mat-option>
+                  @for (m of meals(); track m.id) {
+                    <mat-option [value]="m.id">{{ m.name }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              @if (!selectedMealId()) {
+                <mat-form-field appearance="outline">
+                  <mat-label>Or enter meal name</mat-label>
+                  <input matInput [ngModel]="mealNameOverride()" (ngModelChange)="mealNameOverride.set($event)" />
+                </mat-form-field>
+              }
+
+              <mat-form-field appearance="outline">
+                <mat-label>Note (optional)</mat-label>
+                <input matInput [ngModel]="note()" (ngModelChange)="note.set($event)" />
+              </mat-form-field>
+
+              <div class="form-actions">
+                <button mat-button (click)="cancelAdd()">Cancel</button>
+                <button mat-raised-button color="primary" (click)="confirmAdd()" [disabled]="!selectedPersonId()">
+                  Save
+                </button>
+              </div>
+            </mat-card-content>
+          }
+        </mat-card>
+      }
+    </div>
+  }
+</div>

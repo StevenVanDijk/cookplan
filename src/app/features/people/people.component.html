@@ -1,0 +1,55 @@
+<div class="people-page">
+  <h2>People</h2>
+
+  <mat-card class="add-card">
+    <mat-card-header>
+      <mat-card-title>Add Person</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          [ngModel]="newName()"
+          (ngModelChange)="newName.set($event)"
+          (keydown.enter)="add()"
+          placeholder="e.g. Alice"
+        />
+      </mat-form-field>
+
+      <div class="color-row">
+        <span class="color-label">Colour:</span>
+        @for (c of palette; track c) {
+          <button
+            class="color-swatch"
+            [style.background]="c"
+            [class.selected]="newColor() === c"
+            (click)="newColor.set(c)"
+            [attr.aria-label]="'Select colour ' + c"
+          ></button>
+        }
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" (click)="add()" [disabled]="!newName().trim()">
+        <mat-icon>person_add</mat-icon> Add
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  @if (persons().length === 0) {
+    <p class="empty-hint">No people yet. Add someone above.</p>
+  } @else {
+    <mat-list class="person-list">
+      @for (p of persons(); track p.id) {
+        <mat-list-item>
+          <span class="person-dot" [style.background]="p.color"></span>
+          <span class="person-name">{{ p.name }}</span>
+          <button mat-icon-button color="warn" (click)="remove(p.id)" aria-label="Remove person">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      }
+    </mat-list>
+  }
+</div>

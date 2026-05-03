@@ -1,0 +1,30 @@
+<mat-card
+  class="assignment-card"
+  [class.completed]="assignment().completed"
+  [style.border-left-color]="person()?.color ?? '#ccc'"
+>
+  <mat-card-header>
+    <mat-card-title>
+      <mat-checkbox
+        [checked]="assignment().completed"
+        (change)="onToggle($event.checked)"
+        color="primary"
+      >
+        {{ person()?.name ?? 'Unknown' }}
+      </mat-checkbox>
+    </mat-card-title>
+    @if (assignment().mealName) {
+      <mat-card-subtitle>{{ assignment().mealName }}</mat-card-subtitle>
+    }
+  </mat-card-header>
+  @if (assignment().note) {
+    <mat-card-content>
+      <p class="note">{{ assignment().note }}</p>
+    </mat-card-content>
+  }
+  <mat-card-actions align="end">
+    <button mat-icon-button color="warn" (click)="onDelete()" aria-label="Delete assignment">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

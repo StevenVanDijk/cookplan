@@ -1,0 +1,67 @@
+<div class="meals-page">
+  <h2>Meals</h2>
+
+  <mat-card class="add-card">
+    <mat-card-header>
+      <mat-card-title>Add Meal Idea</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Meal name</mat-label>
+        <input
+          matInput
+          [ngModel]="newName()"
+          (ngModelChange)="newName.set($event)"
+          (keydown.enter)="add()"
+          placeholder="e.g. Pasta Carbonara"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description (optional)</mat-label>
+        <textarea matInput rows="2" [ngModel]="newDescription()" (ngModelChange)="newDescription.set($event)"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tags (comma-separated, optional)</mat-label>
+        <input matInput [ngModel]="newTagsRaw()" (ngModelChange)="newTagsRaw.set($event)" placeholder="italian, quick" />
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" (click)="add()" [disabled]="!newName().trim()">
+        <mat-icon>restaurant</mat-icon> Add
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  @if (meals().length === 0) {
+    <p class="empty-hint">No meal ideas yet. Add one above.</p>
+  } @else {
+    <div class="meals-list">
+      @for (m of meals(); track m.id) {
+        <mat-card class="meal-card">
+          <mat-card-header>
+            <mat-card-title>{{ m.name }}</mat-card-title>
+            @if (m.description) {
+              <mat-card-subtitle>{{ m.description }}</mat-card-subtitle>
+            }
+          </mat-card-header>
+          @if (m.tags.length > 0) {
+            <mat-card-content>
+              <mat-chip-set>
+                @for (tag of m.tags; track tag) {
+                  <mat-chip>{{ tag }}</mat-chip>
+                }
+              </mat-chip-set>
+            </mat-card-content>
+          }
+          <mat-card-actions align="end">
+            <button mat-icon-button color="warn" (click)="remove(m.id)" aria-label="Remove meal">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
+</div>
