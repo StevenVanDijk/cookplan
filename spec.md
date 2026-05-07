@@ -55,3 +55,8 @@ Every change must be represented here as a user story before implementation begi
 **As a** user,
 **I want to** have my assignments, people, and meals stored on a server,
 **So that** data survives browser clears and is shared across devices.
+
+### US-011 – Install the app as a PWA
+**As a** user,
+**I want to** install CookPlan on my device from the browser,
+**So that** I can access it like a native app without opening a browser tab.
