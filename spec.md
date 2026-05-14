@@ -60,3 +60,8 @@ Every change must be represented here as a user story before implementation begi
 **As a** user,
 **I want to** install CookPlan on my device from the browser,
 **So that** I can access it like a native app without opening a browser tab.
+
+### US-012 – Consistent Material Design appearance
+**As a** user,
+**I want to** see a consistent Material Design colour scheme throughout the app,
+**So that** buttons, form fields, and other components share a unified visual style.
