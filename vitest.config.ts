@@ -3,6 +3,6 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     environment: 'node',
-    include: ['api/**/*.spec.ts'],
+    include: ['api/**/*.spec.ts', 'src/styles.spec.ts'],
   },
 });
